@@ -1,0 +1,206 @@
+﻿<mica:MicaWindow
+    x:Class="png2xnb.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:png2xnb"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mica="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
+    xmlns:models="clr-namespace:png2xnb.Models"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:utils="clr-namespace:png2xnb.Helpers"
+    Name="Window"
+    Title="png2xnb"
+    MinWidth="300"
+    MinHeight="300"
+    Icon="\appIcon-128.png"
+    ResizeMode="CanMinimize"
+    SizeToContent="WidthAndHeight"
+    mc:Ignorable="d">
+    <mica:MicaWindow.Resources>
+        <utils:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <utils:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+        <ObjectDataProvider
+            x:Key="ProfileTypes"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:ProfileType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </mica:MicaWindow.Resources>
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  main part  -->
+        <ScrollViewer
+            MaxHeight="500"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Text="Input file (PNG or folder)" />
+                    <Grid Margin="0,8,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <mica:TextBox
+                            Margin="0,0,12,0"
+                            Watermark="Input file/folder path..."
+                            Text="{Binding ViewModel.Input, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        <mica:Button
+                            Grid.Column="1"
+                            Margin="0,0,8,0"
+                            Padding="8"
+                            VerticalAlignment="Stretch"
+                            Command="{Binding ViewModel.ChooseInputFileCommand}"
+                            ToolTip="Open input file...">
+                            <mica:SymbolIcon Symbol="Open16" />
+                        </mica:Button>
+                        <mica:Button
+                            Grid.Column="2"
+                            Padding="8"
+                            VerticalAlignment="Stretch"
+                            Command="{Binding ViewModel.ChooseInputFolderCommand}"
+                            ToolTip="Open folder...">
+                            <mica:SymbolIcon Symbol="FolderOpen16" />
+                        </mica:Button>
+                    </Grid>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Text="Output file (XNB)" />
+                    <mica:ToggleSwitch
+                        Name="AutoOutput"
+                        Margin="0,8,0,0"
+                        Content="Automatic output fill"
+                        IsChecked="{Binding Settings.AutoOutput}" />
+                    <Grid Margin="0,8,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <mica:TextBox
+                            Margin="0,0,12,0"
+                            IsEnabled="{Binding Settings.AutoOutput, Converter={StaticResource InverseBooleanConverter}}"
+                            Watermark="Output file/folder path..."
+                            Text="{Binding ViewModel.Output, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        <mica:Button
+                            Grid.Column="1"
+                            Margin="0,0,8,0"
+                            Padding="8"
+                            VerticalAlignment="Stretch"
+                            Command="{Binding ViewModel.ChooseOutputFileCommand}"
+                            IsEnabled="{Binding Settings.AutoOutput, Converter={StaticResource InverseBooleanConverter}}"
+                            ToolTip="Open input file...">
+                            <mica:SymbolIcon Symbol="Open16" />
+                        </mica:Button>
+                        <mica:Button
+                            Grid.Column="2"
+                            Padding="8"
+                            VerticalAlignment="Stretch"
+                            Command="{Binding ViewModel.ChooseOutputFolderCommand}"
+                            IsEnabled="{Binding Settings.AutoOutput, Converter={StaticResource InverseBooleanConverter}}"
+                            ToolTip="Open folder...">
+                            <mica:SymbolIcon Symbol="FolderOpen16" />
+                        </mica:Button>
+                    </Grid>
+
+                    <Expander>
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <mica:SymbolIcon
+                                    FontSize="20"
+                                    Symbol="ImageSearch20" />
+                                <TextBlock
+                                    Margin="8,0,0,0"
+                                    FontWeight="Bold"
+                                    Text="Image preferences" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <mica:ToggleSwitch
+                                Margin="0,0,0,8"
+                                Content="Premultiply alpha"
+                                IsChecked="{Binding Settings.PremultiplyAlpha}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox
+                                    ItemsSource="{Binding Source={StaticResource ProfileTypes}}"
+                                    SelectedValue="{Binding Settings.Format}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Learn about the (technical) differences between Reach and HiDef">
+                                    <Hyperlink
+                                        x:Name="Link"
+                                        NavigateUri="https://shawnhargreaves.com/blog/reach-vs-hidef.html"
+                                        RequestNavigate="Hyperlink_RequestNavigate"
+                                        TextDecorations="None">
+                                        <mica:SymbolIcon
+                                            Grid.Column="1"
+                                            Foreground="{Binding ElementName=Link, Path=Foreground}"
+                                            Symbol="Info16" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!--  convert part  -->
+        <Grid
+            x:Name="ConvertSection"
+            Grid.Row="1"
+            Margin="0,16,0,0"
+            IsEnabled="{Binding ViewModel.HasErrors, Converter={StaticResource InverseBooleanConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <mica:Button
+                Margin="0,0,12,0"
+                Padding="8"
+                Command="{Binding ViewModel.ConvertCommand}"
+                Content="Convert"
+                Icon="ArrowRight20"
+                IsEnabled="{Binding Settings.AutoConvert, Converter={StaticResource InverseBooleanConverter}}" />
+            <mica:ToggleSwitch
+                Grid.Column="1"
+                Content="Auto-convert"
+                IsChecked="{Binding Settings.AutoConvert}"
+                ToolTip="png2xnb will automatically convert if the image is updated so you dont even have to click a button anymore!" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Width="{Binding ElementName=ConvertSection, Path=ActualWidth}"
+                Margin="0,12,0,0"
+                HorizontalAlignment="Left"
+                TextWrapping="WrapWithOverflow"
+                Text="{Binding ViewModel.LogMessage}" />
+
+        </Grid>
+    </Grid>
+</mica:MicaWindow>

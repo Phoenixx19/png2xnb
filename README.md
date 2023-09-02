@@ -1,84 +1,43 @@
-PNG to XNB
-==========
+ # png2xnb <!-- <img href="https://jumpkingplus.github.io/" src ="https://raw.githubusercontent.com/Phoenixx19/png2xnb/icon.png" width="80px" alt="png2xnb logo" align="right"> -->
 
-Command line program to convert PNG files to [XNB format](http://xbox.create.msdn.com/en-US/sample/xnb_format).
-Supports batch conversion.
+*An XNB packer for modern times.*
 
-Motivation
-----------
+> Fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).
 
-When I created my Terraria HD texture pack, the new textures were around 800 MB in total. Not too much, but compared to the original 14 MB, it was a huge difference. So that's why I created this little converter program. I should have googled first, because there are similar applications like this for example: [XNB Builder](http://sourceforge.net/projects/xnbbuilder/) which support many different file formats, not just PNG images.
+![Preview](https://raw.githubusercontent.com/Phoenixx19/png2xnb/preview.png)
 
-Of course when I used it only myself it wasn't very well polished. But than I thought it might be beneficial for some people on the internet who are looking for a minimalistic PNG to XNB converter.
+## Overview
 
-Requirements
-------------
+*(checked = done; unchecked = uncomplete atm)*<br>
+The basic `png_to_xnb` features such as:
 
-The program requires .NET 3.0. It should work with newer .NET versions as well. Windows 7 comes with preinstalled .NET 3.5 so the
-program should run without installing any additional software.
+- [x] PNG file conversion
+- [x] PNG folder conversion
+- [x] Toggle for premultiplying alpha
+- [x] Reach and HiDef formats support
+- [ ] Image compression
 
-I used Xamarin Studio / Mono for development, which is an open source .NET implementation.
+but `png2xnb` adds:
+- [x] Automatic output fill
+- [x] Settings-that-save-on-closing-the-application 🤯
+- [x] Feedback on inputs (data validation)
+- [x] System notification on auto convert
+- [ ] Auto convert (listens for file modifications and converts automatically)
+- [ ] Recursive folder conversion (compiling every PNG inside every subfolder too)
 
-The program runs on Windows and on Mac / Linux by using `wine` or `mono`. I use it on a Mac, but also tested on Windows 7.
+## Motivation
 
-On Ubuntu Linux you need to install a package which contains the `System.Windows.Forms.dll` file, for example: `sudo apt-get install libmono-system-windows-forms4.0-cil`. You can find packages in the [package repository](http://packages.ubuntu.com/).
+While working on JumpKingPlus, two fellow friends of mine introduced me to png_to_xnb for updating their levels' hitboxes and I quickly realized how useful and quick this tool was in Jump King Level Making
 
-Examples
---------
+...so why not make it better by completely rewriting the UI in WPF?!?
 
-1) Start a command prompt (cmd.exe)
-2) Change to the folder where you have the png_to_xnb.exe file. Most likely this is in your Downloads folder:
+## Requirements
 
-    cd %USERPROFILE%\Downloads
+The program *requires* `.NET 4.8`. <br>The program **only** runs **on Windows** unless a miracle happens with `wine` or `mono`.
 
-3) Convert Item_1.png to XNB:
+Requires as in:
+> "I've compiled it in `4.8` because I haven't bothered seeing if it can be lowered further. It should work with newer .NET versions and probably older versions too if you dare to recompile and deal with dependencies."
 
-    png_to_xnb.exe Item_1.png Item_1.xnb
+## License
 
-On Mac / Linux with `wine` (you probably need to install .NET in wine for example: `winetricks dotnet45`):
-
-    wine /path/to/png_to_xnb.exe Item_1.png Item_1.xnb
-
-On Mac / Linux with `mono` installed:
-
-    mono /path/to/png_to_xnb.exe Item_1.png Item_1.xnb
-
-xcompress32.dll
----------------
-
-XNB files can be compressed or uncompressed. The compression algorithm used is LZXD, which was invented by Microsoft, see [official website here](https://msdn.microsoft.com/en-us/library/cc483133%28v=exchg.80%29.aspx).
-I was unable to find any source code for LZXD compression. That's why I used the xcompress32.dll. This is most likely a proprietary dll so I don't want to include it in my project.
-
-If you want to create compressed XNB files then you need to get this dll from somewhere. It is part of the [XNA Game Studio](https://en.wikipedia.org/wiki/Microsoft_XNA) which is discontinued. (I found the dll [here](https://github.com/cpich3g/rpftool/blob/master/RPFTool/xcompress32.dll?raw=true))
-Once you downloaded the dll, move it next to the png_to_xnb.exe file, then my little program should find it.
-
-Command line options
---------------------
-
-    Usage: png_to_xnb.exe [-h|--help] [-c] [-u] [-hidef] [-nopre] png_file [xnb_file]
-
-    The program reads the image 'png_file' and saves as an XNB file as 'xnb_file'.
-    Start without any input parameters to launch a GUI.
-
-    Options:
-      -h      Prints this help.
-      -c      Compress the XNB file. This is the default if xcompress32.dll is
-              available. Note that the compression might take significant time, but
-              of course the result XNB file will be much smaller.
-      -u      Save uncompressed XNB file, even if xcompress32.dll is available.
-      -hidef  XNB's can be either 'reach' or 'hidef'. Default is 'reach', so use
-              this -hidef option when necessary. I don't know what 'reach' or
-              'hidef' means, but for example Terraria cannot load 'hidef' XNB files.
-      -nopre  RGB channels will not be premultiplied by the alpha. By default, XNB's
-              use premultiplied alpha.
-
-    png_file  This can either be a file or a directory. If this is a directory
-              then it will convert all *.png files in the directory (not recursive).
-    xnb_file  This can also be a file or a directory. If this is a directory then
-              the filename will be name.xnb if the image file was name.png
-              If this is omitted then it converts the png_file into the same folder.
-
-License
--------
-
-GPLv3, see LICENSE file
+Following sullerandras' legacy with **GPLv3** (see LICENSE file).
