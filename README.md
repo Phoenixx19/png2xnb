@@ -1,9 +1,10 @@
  # png2xnb <!-- <img href="https://jumpkingplus.github.io/" src ="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/icon.png" width="80px" alt="png2xnb logo" align="right"> -->
 
-*An XNB packer for modern times.*
+*An XNB packer for modern times.* 📦
 
 > A fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).
 
+<br>
 <img src="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/preview.png" alt="Preview" height="400px" />
 
 ## Overview
