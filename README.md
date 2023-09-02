@@ -2,9 +2,9 @@
 
 *An XNB packer for modern times.*
 
-> Fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).
+> A fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).
 
-![Preview](https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/preview.png)
+<img src="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/preview.png" alt="Preview" height="400px" />
 
 ## Overview
 
