@@ -298,7 +298,7 @@ namespace png2xnb.ViewModels
             int count = 0;
             foreach (string pngFile in files)
             {
-                var x = Path.GetRelativePath(pngDirectory, pngFile);
+                //var x = Path.GetRelativePath(pngDirectory, pngFile);
 
                 count += PngFileConvert(pngFile, xnbDirectory, compressed, reach, premultiply);
             }
