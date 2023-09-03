@@ -31,6 +31,7 @@ namespace png2xnb.Views
             DataContext = this;
 
             InitializeComponent();
+            CompressImage.IsEnabled = XCompress.isItAvailable();
         }
 
         public ViewModels.MainWindowViewModel ViewModel

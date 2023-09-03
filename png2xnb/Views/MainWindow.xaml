@@ -158,6 +158,11 @@
                                     </Hyperlink>
                                 </TextBlock>
                             </Grid>
+                            <mica:ToggleSwitch
+                                x:Name="CompressImage"
+                                Margin="0,8,0,0"
+                                Content="Compress image"
+                                IsChecked="{Binding Settings.IsCompressed}" />
                         </StackPanel>
                     </Expander>
                 </StackPanel>
