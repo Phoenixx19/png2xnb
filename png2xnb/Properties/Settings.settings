@@ -14,7 +14,7 @@
     <Setting Name="IsCompressed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Format" Type="System.String" Scope="User">
+    <Setting Name="Format" Type="png2xnb.Models.ProfileType" Scope="User">
       <Value Profile="(Default)">Reach</Value>
     </Setting>
     <Setting Name="PremultiplyAlpha" Type="System.Boolean" Scope="User">

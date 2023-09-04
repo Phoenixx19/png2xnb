@@ -13,7 +13,7 @@
     Title="png2xnb"
     MinWidth="300"
     MinHeight="300"
-    Icon="\appIcon-128.png"
+    Icon="\appIcon.png"
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">

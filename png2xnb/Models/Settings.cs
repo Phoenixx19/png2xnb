@@ -17,9 +17,6 @@ namespace png2xnb.Models
             if (Instance != null)
                 return;
 
-            // read xml
-            // ...
-
             Instance = this;
         }
 
@@ -86,15 +83,10 @@ namespace png2xnb.Models
         /// </summary>
         public ProfileType Format
         {
-            get
-            {
-                if (!Enum.TryParse(Properties.Settings.Default.Format, true, out ProfileType type))
-                    throw new ArgumentException("Could not get the ProfileType requested from Format!\nSet the Format to Reach in the config file.");
-                return type;
-            }
+            get => Properties.Settings.Default.Format;
             set
             {
-                Properties.Settings.Default.Format = value.ToString();
+                Properties.Settings.Default.Format = value;
                 OnPropertyChanged();
                 Properties.Settings.Default.Save();
             }

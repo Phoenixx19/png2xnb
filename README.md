@@ -1,4 +1,4 @@
- # png2xnb <!-- <img href="https://jumpkingplus.github.io/" src ="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/icon.png" width="80px" alt="png2xnb logo" align="right"> -->
+ # png2xnb <img src="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/png2xnb/appIcon.png" width="80px" alt="png2xnb logo" align="right">
 
 *An XNB packer for modern times.* 📦
 
@@ -16,7 +16,7 @@ The basic `png_to_xnb` features such as:
 - [x] PNG folder conversion
 - [x] Toggle for premultiplying alpha
 - [x] Reach and HiDef formats support
-- [ ] Image compression
+- [x] Image compression
 
 but `png2xnb` adds:
 - [x] Automatic output fill
@@ -38,6 +38,10 @@ The program *requires* `.NET 4.8`. <br>The program **only** runs **on Windows** 
 
 Requires as in:
 > "I've compiled it in `4.8` because I haven't bothered seeing if it can be lowered further. It should work with newer .NET versions and probably older versions too if you dare to recompile and deal with dependencies."
+
+## Credits
+
+Icon beautifully crafted by [kkaero](https://kkaeero.tumblr.com/).
 
 ## License
 

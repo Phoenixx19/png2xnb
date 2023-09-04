@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="appIcon-128.png" />
+    <None Remove="appIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="appIcon-128.png" />
+    <Resource Include="appIcon.png" />
   </ItemGroup>
 
   <ItemGroup>

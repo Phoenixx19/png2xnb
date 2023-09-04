@@ -74,9 +74,9 @@ namespace png2xnb.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Reach")]
-        public string Format {
+        public global::png2xnb.Models.ProfileType Format {
             get {
-                return ((string)(this["Format"]));
+                return ((global::png2xnb.Models.ProfileType)(this["Format"]));
             }
             set {
                 this["Format"] = value;
