@@ -2,7 +2,8 @@
 
 *An XNB packer for modern times.* 📦
 
-> A fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).
+> A fork of [sullerandras/png_to_xnb](https://github.com/sullerandras/png_to_xnb).<br>
+> Icon beautifully crafted by [kkaero](https://kkaeero.tumblr.com/).
 
 <br>
 <img src="https://raw.githubusercontent.com/Phoenixx19/png2xnb/master/preview.png" alt="Preview" height="400px" />
@@ -38,10 +39,6 @@ The program *requires* `.NET 4.8`. <br>The program **only** runs **on Windows** 
 
 Requires as in:
 > "I've compiled it in `4.8` because I haven't bothered seeing if it can be lowered further. It should work with newer .NET versions and probably older versions too if you dare to recompile and deal with dependencies."
-
-## Credits
-
-Icon beautifully crafted by [kkaero](https://kkaeero.tumblr.com/).
 
 ## License
 
