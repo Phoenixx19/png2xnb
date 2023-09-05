@@ -17,7 +17,7 @@ The basic `png_to_xnb` features such as:
 - [x] PNG folder conversion
 - [x] Toggle for premultiplying alpha
 - [x] Reach and HiDef formats support
-- [x] Image compression
+- [x] [Image compression](https://github.com/sullerandras/png_to_xnb#xcompress32dll)
 
 but `png2xnb` adds:
 - [x] Automatic output fill
@@ -25,7 +25,7 @@ but `png2xnb` adds:
 - [x] Feedback on inputs (data validation)
 - [x] System notification on auto convert
 - [ ] Auto convert (listens for file modifications and converts automatically)
-- [ ] Recursive folder conversion (compiling every PNG inside every subfolder too)
+- [x] Recursive folder conversion (compiling every PNG inside every subfolder too)
 
 ## Motivation
 

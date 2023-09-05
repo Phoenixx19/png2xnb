@@ -285,6 +285,22 @@ namespace png2xnb.ViewModels
         #endregion
 
         #region png2xnb methods
+        string GetRelativePath(string filespec, string folder)
+        {
+            Uri pathUri = new Uri(filespec);
+            // Folders must end in a slash
+            if (!folder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                folder += Path.DirectorySeparatorChar;
+            }
+            Uri folderUri = new Uri(folder);
+            return Uri.UnescapeDataString(
+                folderUri.MakeRelativeUri(pathUri)
+                .ToString()
+                .Replace('/', Path.DirectorySeparatorChar)
+            );
+        }
+
         private int PngFileConvert(string pngFile, string xnbDirectory, bool compressed, bool reach, bool premultiply)
         {
             string fileName = Path.GetFileNameWithoutExtension(pngFile);
@@ -296,11 +312,16 @@ namespace png2xnb.ViewModels
         {
             string[] files = Directory.GetFiles(pngDirectory, "*.png", SearchOption.AllDirectories);
             int count = 0;
+            
             foreach (string pngFile in files)
             {
-                //var x = Path.GetRelativePath(pngDirectory, pngFile);
+                string relative = GetRelativePath(pngFile, pngDirectory);
+                string newfolder = xnbDirectory + "\\" + Path.GetDirectoryName(relative);
 
-                count += PngFileConvert(pngFile, xnbDirectory, compressed, reach, premultiply);
+                if (!Directory.Exists(newfolder))
+                    Directory.CreateDirectory(newfolder);
+
+                count += PngFileConvert(pngFile, newfolder, compressed, reach, premultiply);
             }
             return count;
         }

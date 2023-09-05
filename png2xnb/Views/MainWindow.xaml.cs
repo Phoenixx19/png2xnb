@@ -32,6 +32,8 @@ namespace png2xnb.Views
 
             InitializeComponent();
             CompressImage.IsEnabled = XCompress.isItAvailable();
+            if (!CompressImage.IsEnabled) 
+                CompressImage.IsChecked = false;
         }
 
         public ViewModels.MainWindowViewModel ViewModel
