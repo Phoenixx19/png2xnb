@@ -24,7 +24,7 @@ but `png2xnb` adds:
 - [x] Settings-that-save-on-closing-the-application 🤯
 - [x] Feedback on inputs (data validation)
 - [x] System notification on auto convert
-- [ ] Auto convert (listens for file modifications and converts automatically)
+- [x] Auto convert (listens for file modifications and converts automatically)
 - [x] Recursive folder conversion (compiling every PNG inside every subfolder too)
 
 ## Motivation
