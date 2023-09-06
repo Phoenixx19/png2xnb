@@ -5,9 +5,6 @@
     <Setting Name="AutoOutput" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AutoConvert" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="DefaultDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">xnb</Value>
     </Setting>

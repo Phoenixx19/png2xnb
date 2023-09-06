@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Ookii.Dialogs.Wpf;
 using png2xnb.Attributes;
@@ -23,14 +26,23 @@ namespace png2xnb.ViewModels
     {
         public MainWindowViewModel()
         {
+            // notify errors
             OnErrorsChanged(nameof(Input));
             OnErrorsChanged(nameof(Output));
+
+            // watcher 
+            watcher = new FileWatcher();
+            watcher.Changed += OnFileChanged;
+            watcher.Created += OnFileCreated;
+            watcher.Deleted += OnFileDeleted;
+            watcher.Renamed += OnFileRenamed;
         }
 
         #region properties
         private string input;
         private OutputType type;
         private string output;
+        private bool autoConvert = false;
         private string logMessage = "Ready";
         private ICommand chooseInputFileCommand;
         private ICommand chooseInputFolderCommand;
@@ -41,7 +53,6 @@ namespace png2xnb.ViewModels
         /// <summary>
         /// Input file full path
         /// </summary>
-
         [Required]
         [FileOrFolder]
         public string Input
@@ -49,9 +60,13 @@ namespace png2xnb.ViewModels
             get => input;
             set
             {
-                input = value;
-                OnPropertyChanged();
-                OnErrorsChanged();
+                if (input != value)
+                {
+                    input = value;
+                    OnPropertyChanged();
+                    OnErrorsChanged();
+                    watcher.Update(input);
+                }
             }
         }
 
@@ -63,8 +78,11 @@ namespace png2xnb.ViewModels
             get => type; 
             private set
             {
-                type = value;
-                OnPropertyChanged();
+                if (type != value)
+                {
+                    type = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -77,9 +95,38 @@ namespace png2xnb.ViewModels
             get => output; 
             set
             {
-                output = value;
-                OnPropertyChanged();
-                OnErrorsChanged();
+                if (output != value)
+                {
+                    output = value;
+                    OnPropertyChanged();
+                    OnErrorsChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Toggle for auto convert
+        /// </summary>
+        public bool AutoConvert
+        {
+            get => autoConvert;
+            set
+            {
+                if (autoConvert != value)
+                {
+                    autoConvert = value;
+                    OnPropertyChanged();
+                    watcher.Update(Input);
+                    try
+                    {
+                        if (autoConvert)
+                            ConvertCommand?.Execute(this);
+                    }
+                    catch(Exception ex)
+                    { 
+                        MessageBox.Show(ex.ToString());
+                    };
+                }
             }
         }
 
@@ -363,7 +410,7 @@ namespace png2xnb.ViewModels
                 text = "Converted " + count + " file" + (count != 1 ? "s" : "") + Path.GetFullPath(Output);
             }
 
-            if (Settings.Instance.AutoConvert)
+            if (AutoConvert)
             {
                 new ToastContentBuilder().AddText(text).Show();
             }
@@ -416,6 +463,55 @@ namespace png2xnb.ViewModels
         public IEnumerable GetErrors(string propertyName)
         {
             return errors.ContainsKey(propertyName) ? errors[propertyName] : null;
+        }
+        #endregion
+
+        #region FileSystemWatcher
+        private FileWatcher watcher;
+
+        private void OnFileChanged(object sender, FileSystemEventArgs e)
+        {
+            Debug.WriteLine("Changed: " + e.FullPath);
+            string relative = GetRelativePath(e.FullPath, Input);
+            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+            string newFile = newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb";
+            Debug.WriteLine("Changed: " + newFile);
+            
+            RunConvert(e.FullPath, newFile, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+        }
+
+        private void OnFileCreated(object sender, FileSystemEventArgs e)
+        {
+            Debug.WriteLine("Created: " + e.FullPath);
+            string relative = GetRelativePath(e.FullPath, Input);
+            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+            Debug.WriteLine("Created: " + newfolder);
+            
+            RunConvert(e.FullPath, newfolder, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+        }
+
+        private void OnFileDeleted(object sender, FileSystemEventArgs e)
+        {
+            Debug.WriteLine("Deleted: " + e.FullPath);
+            string relative = GetRelativePath(e.FullPath, Input);
+            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+            Debug.WriteLine("Deleted: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+            
+            File.Delete(newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+        }
+
+        private void OnFileRenamed(object sender, RenamedEventArgs e)
+        {
+            Debug.WriteLine("Renamed: " + e.OldFullPath);
+            string relative = GetRelativePath(e.OldFullPath, Input);
+            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+            Debug.WriteLine("Renamed from: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb");
+            Debug.WriteLine("Renamed to: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+            
+            File.Move(
+                newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb", 
+                newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb"
+            );
         }
         #endregion
     }

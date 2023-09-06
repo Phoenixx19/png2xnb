@@ -33,23 +33,12 @@ namespace png2xnb.Models
             get => Properties.Settings.Default.AutoOutput;
             set
             {
-                Properties.Settings.Default.AutoOutput = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        /// <summary>
-        /// Toggle for auto convert
-        /// </summary>
-        public bool AutoConvert
-        {
-            get => Properties.Settings.Default.AutoConvert;
-            set
-            {
-                Properties.Settings.Default.AutoConvert = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
+                if (Properties.Settings.Default.AutoOutput != value)
+                {
+                    Properties.Settings.Default.AutoOutput = value;
+                    OnPropertyChanged();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -61,9 +50,12 @@ namespace png2xnb.Models
             get => Properties.Settings.Default.DefaultDir;
             set
             {
-                Properties.Settings.Default.DefaultDir = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
+                if (Properties.Settings.Default.DefaultDir != value)
+                {
+                    Properties.Settings.Default.DefaultDir = value;
+                    OnPropertyChanged();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -72,9 +64,12 @@ namespace png2xnb.Models
             get => Properties.Settings.Default.IsCompressed;
             set
             {
-                Properties.Settings.Default.IsCompressed = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
+                if (Properties.Settings.Default.IsCompressed != value)
+                {
+                    Properties.Settings.Default.IsCompressed = value;
+                    OnPropertyChanged();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -86,9 +81,12 @@ namespace png2xnb.Models
             get => Properties.Settings.Default.Format;
             set
             {
-                Properties.Settings.Default.Format = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
+                if (Properties.Settings.Default.Format != value)
+                {
+                    Properties.Settings.Default.Format = value;
+                    OnPropertyChanged();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -100,9 +98,12 @@ namespace png2xnb.Models
             get => Properties.Settings.Default.PremultiplyAlpha;
             set
             {
-                Properties.Settings.Default.PremultiplyAlpha = value;
-                OnPropertyChanged();
-                Properties.Settings.Default.Save();
+                if (Properties.Settings.Default.PremultiplyAlpha != value)
+                {
+                    Properties.Settings.Default.PremultiplyAlpha = value;
+                    OnPropertyChanged();
+                    Properties.Settings.Default.Save();
+                }
             }
         }
         #endregion

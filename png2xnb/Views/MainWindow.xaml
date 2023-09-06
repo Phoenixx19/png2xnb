@@ -190,11 +190,11 @@
                 Command="{Binding ViewModel.ConvertCommand}"
                 Content="Convert"
                 Icon="ArrowRight20"
-                IsEnabled="{Binding Settings.AutoConvert, Converter={StaticResource InverseBooleanConverter}}" />
+                IsEnabled="{Binding ViewModel.AutoConvert, Converter={StaticResource InverseBooleanConverter}}" />
             <mica:ToggleSwitch
                 Grid.Column="1"
                 Content="Auto-convert"
-                IsChecked="{Binding Settings.AutoConvert}"
+                IsChecked="{Binding ViewModel.AutoConvert}"
                 ToolTip="png2xnb will automatically convert if the image is updated so you dont even have to click a button anymore!" />
 
             <TextBlock

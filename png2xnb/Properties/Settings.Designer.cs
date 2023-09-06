@@ -37,18 +37,6 @@ namespace png2xnb.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoConvert {
-            get {
-                return ((bool)(this["AutoConvert"]));
-            }
-            set {
-                this["AutoConvert"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("xnb")]
         public string DefaultDir {
             get {
