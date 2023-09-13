@@ -6,6 +6,7 @@
     <LangVersion>10.0</LangVersion>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>applicationIcon.ico</ApplicationIcon>
+    <PackageLicenseFile>README.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>

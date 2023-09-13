@@ -471,47 +471,75 @@ namespace png2xnb.ViewModels
 
         private void OnFileChanged(object sender, FileSystemEventArgs e)
         {
-            Debug.WriteLine("Changed: " + e.FullPath);
-            string relative = GetRelativePath(e.FullPath, Input);
-            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
-            string newFile = newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb";
-            Debug.WriteLine("Changed: " + newFile);
+            try
+            {
+                //Debug.WriteLine("Changed: " + e.FullPath);
+                string relative = GetRelativePath(e.FullPath, Input);
+                string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+                string newFile = newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb";
+                //Debug.WriteLine("Changed: " + newFile);
             
-            RunConvert(e.FullPath, newFile, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+                RunConvert(e.FullPath, newFile, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.StackTrace, ex.Message);
+            }
         }
 
         private void OnFileCreated(object sender, FileSystemEventArgs e)
         {
-            Debug.WriteLine("Created: " + e.FullPath);
-            string relative = GetRelativePath(e.FullPath, Input);
-            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
-            Debug.WriteLine("Created: " + newfolder);
-            
-            RunConvert(e.FullPath, newfolder, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+            try
+            {
+                //Debug.WriteLine("Created: " + e.FullPath);
+                string relative = GetRelativePath(e.FullPath, Input);
+                string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+                //Debug.WriteLine("Created: " + newfolder);
+
+                RunConvert(e.FullPath, newfolder, Settings.Instance.IsCompressed, Settings.Instance.Format, Settings.Instance.PremultiplyAlpha);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.StackTrace, ex.Message);
+            }
         }
 
         private void OnFileDeleted(object sender, FileSystemEventArgs e)
         {
-            Debug.WriteLine("Deleted: " + e.FullPath);
-            string relative = GetRelativePath(e.FullPath, Input);
-            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
-            Debug.WriteLine("Deleted: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
-            
-            File.Delete(newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+            try
+            {
+                //Debug.WriteLine("Deleted: " + e.FullPath);
+                string relative = GetRelativePath(e.FullPath, Input);
+                string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+                //Debug.WriteLine("Deleted: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+
+                File.Delete(newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.StackTrace, ex.Message);
+            }
         }
 
         private void OnFileRenamed(object sender, RenamedEventArgs e)
         {
-            Debug.WriteLine("Renamed: " + e.OldFullPath);
-            string relative = GetRelativePath(e.OldFullPath, Input);
-            string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
-            Debug.WriteLine("Renamed from: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb");
-            Debug.WriteLine("Renamed to: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
-            
-            File.Move(
-                newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb", 
-                newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb"
-            );
+            try
+            {
+                //Debug.WriteLine("Renamed: " + e.OldFullPath);
+                string relative = GetRelativePath(e.OldFullPath, Input);
+                string newfolder = Output + "\\" + Path.GetDirectoryName(relative);
+                //Debug.WriteLine("Renamed from: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb");
+                //Debug.WriteLine("Renamed to: " + newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb");
+
+                File.Move(
+                    newfolder + "\\" + Path.GetFileNameWithoutExtension(e.OldFullPath) + ".xnb", 
+                    newfolder + "\\" + Path.GetFileNameWithoutExtension(e.FullPath) + ".xnb"
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.StackTrace, ex.Message);
+            }
         }
         #endregion
     }

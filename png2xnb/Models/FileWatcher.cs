@@ -14,7 +14,6 @@ namespace png2xnb.Models
         public FileWatcher() : base()
         {
             NotifyFilter =
-                NotifyFilters.LastAccess |
                 NotifyFilters.LastWrite |
                 NotifyFilters.FileName |
                 NotifyFilters.DirectoryName;
@@ -39,7 +38,7 @@ namespace png2xnb.Models
             else
             {
                 Path = path;
-                Filter = "*.*";
+                Filter = "*.png";
                 IncludeSubdirectories = true;
             }
 
